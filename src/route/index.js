@@ -26,6 +26,7 @@ module.exports = server => {
                         db.password == params.repassword
                     ) {
                         db.save((err, data) => {
+                            console.log(err)
                             err ? reject(Boom.boomify(new Error(err.ValidationError), { statusCode: 400 }))
                                 : resolve(data)
                         })

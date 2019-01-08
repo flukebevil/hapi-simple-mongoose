@@ -8,15 +8,13 @@ const UserSchema = new Schema({
     password: { type: String, required: true }
 })
 
-UserSchema.pre('save', next => {
-    if (this.isModified('password')) return next()
-    bcrypt.getSalt(10, (err, salt) => {
-        if (err) return next(err)
-        bcrypt.hash(this.password, salt, (err, hash) => {
+UserSchema.pre('save', function (next) {
+    if (!this.isModified('password')) return next()
+        bcrypt.hash(this.password, 10, (err, hash) => {
             if (err) return next(err)
+            console.log(hash)
             this.password = hash
             next()
-        })
     })
 })
 
