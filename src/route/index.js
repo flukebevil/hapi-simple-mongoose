@@ -2,6 +2,7 @@
 
 const Users = require('../model/user')
 const Boom = require('boom')
+const Bcrypt = require('bcrypt')
 
 module.exports = server => {
 
@@ -26,7 +27,7 @@ module.exports = server => {
                     ) {
                         db.save((err, data) => {
                             err ? reject(Boom.boomify(new Error(err.ValidationError), { statusCode: 400 }))
-                            :resolve(data)
+                                : resolve(data)
                         })
                     }
                     else reject(Boom.boomify(new Error('Fuck uuuu Bitch juz see ur field!!'), { statusCode: 400 }))
@@ -48,15 +49,22 @@ module.exports = server => {
         path: '/users/login',
         method: 'POST',
         handler: async (request, h) => {
-            try {
-                const params = h.request.payload
-                return await new Promise((resolve, reject) => {
-                    Users.findOne({ username: params.username, password: params.password },
-                        (err, res) => (res == null) ? reject(Boom.unauthorized('fuck u')) : resolve(res))
+            const params = h.request.payload
+            return await new Promise((resolve, reject) =>
+                Users.findOne({ username: params.username }, (err, user) => {
+                    if (err) reject(err)                
+                    Bcrypt.compare(params.password, user.password, (err, isMatch)=> {
+                        if (err) reject(err)
+                        if (isMatch) 
+                            resolve({
+                                id: user.id,
+                                name: user.name
+                            })
+                        else
+                            reject(Boom.unauthorized('Wrong information :b '))
+                    })
                 })
-            } catch (e) {
-                throw Boom.unauthorized(e)
-            }
+            )
         }
     });
 
