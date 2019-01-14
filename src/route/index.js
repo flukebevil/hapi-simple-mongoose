@@ -18,12 +18,12 @@ module.exports = server => {
         method: 'POST',
         path: '/users',
         config: {
-            handler: async (request, h) => {
+            handler: (request, h) => {
                 const params = h.request.payload
                 const db = new Users(params)
-                return await new Promise((resolve, reject) => {
+                return new Promise((resolve, reject) => {
                     if (params.repassword != null &&
-                        db.password == params.repassword
+                        db.password === params.repassword
                     ) {
                         db.save((err, data) => {
                             console.log(err)
@@ -49,8 +49,8 @@ module.exports = server => {
     server.route({
         method: 'POST',
         path: '/users/edit/{user_id}',
-        handler: async (request, h) => {
-            return await new Promise((resolve, reject) => {
+        handler: (request, h) => {
+            return new Promise((resolve, reject) => {
                 Users.findOneAndUpdate(request.params.user_id
                     , {
                         $set: { name: h.request.payload.name }
@@ -65,9 +65,9 @@ module.exports = server => {
     server.route({
         path: '/users/login',
         method: 'POST',
-        handler: async (request, h) => {
+        handler: (request, h) => {
             const params = h.request.payload
-            return await new Promise((resolve, reject) =>
+            return new Promise((resolve, reject) =>
                 Users.findOne({ username: params.username }, (err, user) => {
                     if (err) reject(err)
                     Bcrypt.compare(params.password, user.password, (err, isMatch) => {
