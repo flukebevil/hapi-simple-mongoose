@@ -50,7 +50,8 @@ module.exports = server => {
         method: 'POST',
         path: '/users/edit/{user_id}',
         handler: async (request, h) => {
-            console.log(request)
+            const data = await Users.findOneAndUpdate(request.params.user_id)
+            return (data)
         }
     })
 
