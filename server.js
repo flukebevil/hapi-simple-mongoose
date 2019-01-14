@@ -2,10 +2,11 @@
 
 const Hapi = require('hapi')
 const Routes = require('./src/route')
-const server = Hapi.server({
-    port: 3000,
-    host: 'localhost'
-})
+// const server = Hapi.server({
+//     port: 3000,
+//     host: 'localhost'
+// })
+const server = new Hapi.Server(+process.env.PORT, '0.0.0.0');
 const mongoose = require('mongoose')
 const init = async () => {
     await mongoose.connect('mongodb://localhost/mydb')
