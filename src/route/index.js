@@ -47,16 +47,24 @@ module.exports = server => {
     })
 
     server.route({
+        method: 'POST',
+        path: '/users/edit/{user_id}',
+        handler: async (request, h) => {
+            console.log(request)
+        }
+    })
+
+    server.route({
         path: '/users/login',
         method: 'POST',
         handler: async (request, h) => {
             const params = h.request.payload
             return await new Promise((resolve, reject) =>
                 Users.findOne({ username: params.username }, (err, user) => {
-                    if (err) reject(err)                
-                    Bcrypt.compare(params.password, user.password, (err, isMatch)=> {
+                    if (err) reject(err)
+                    Bcrypt.compare(params.password, user.password, (err, isMatch) => {
                         if (err) reject(err)
-                        if (isMatch) 
+                        if (isMatch)
                             resolve({
                                 id: user.id,
                                 name: user.name
@@ -67,7 +75,7 @@ module.exports = server => {
                 })
             )
         }
-    });
+    })
 
     server.route({
         method: 'GET',
