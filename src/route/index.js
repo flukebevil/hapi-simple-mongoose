@@ -50,8 +50,15 @@ module.exports = server => {
         method: 'POST',
         path: '/users/edit/{user_id}',
         handler: async (request, h) => {
-            const data = await Users.findOneAndUpdate(request.params.user_id)
-            return (data)
+            return await new Promise((resolve, reject) => {
+                Users.findOneAndUpdate(request.params.user_id
+                    , {
+                        $set: { name: h.request.payload.name }
+                    }, (err, res) => {
+                        if (err) reject(err)
+                        resolve(res)
+                    })
+            })
         }
     })
 
