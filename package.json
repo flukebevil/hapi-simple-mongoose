@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "lint": "eslint src",
+    "lintfix": "eslint --fix src"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +15,9 @@
     "bcrypt": "^3.0.3",
     "boom": "^7.3.0",
     "dotenv": "^6.2.0",
+    "eslint-config-prettier": "^3.4.0",
     "hapi": "^17.8.1",
+    "hapi-auth-jwt2": "^8.2.0",
     "hapi-pino": "^5.2.0",
     "inert": "^5.1.2",
     "joi": "^14.3.1",

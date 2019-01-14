@@ -18,7 +18,7 @@ module.exports = server => {
         method: 'POST',
         path: '/users',
         config: {
-            handler: (request, h) => {
+            handler: async (request, h) => {
                 const params = h.request.payload
                 const db = new Users(params)
                 return new Promise((resolve, reject) => {
@@ -49,7 +49,7 @@ module.exports = server => {
     server.route({
         method: 'POST',
         path: '/users/edit/{user_id}',
-        handler: (request, h) => {
+        handler: async (request, h) => {
             return new Promise((resolve, reject) => {
                 Users.findOneAndUpdate(request.params.user_id
                     , {
@@ -65,7 +65,7 @@ module.exports = server => {
     server.route({
         path: '/users/login',
         method: 'POST',
-        handler: (request, h) => {
+        handler: async (request, h) => {
             const params = h.request.payload
             return new Promise((resolve, reject) =>
                 Users.findOne({ username: params.username }, (err, user) => {
