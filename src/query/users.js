@@ -1,4 +1,4 @@
-const dao = require('../dao/user')
+const dao = require('../model/user')
 
 const findAll = () => {
     return new Promise((resolve, reject) => {
@@ -33,9 +33,37 @@ const update = (id, body) => {
     })
 }
 
+const findByName = (name) => {
+    return new Promise((resolve, reject) => {
+        dao.findOne({ name: name }, (err, res) => {
+            if (err)
+                reject(err)
+            else
+                resolve(res)
+        })
+    })
+}
+
+const findUniqueUser = (username) => {
+    return new Promise((resolve, reject) => {
+        dao.findOne({ username: username }, (err, res) => {
+            if (err)
+                reject(err)
+            else {
+                if (res == null) 
+                    resolve(false)
+                else 
+                    resolve(true)
+            }
+        })
+    })
+}
+
 module.exports = {
     findAll,
     findById,
     update,
-    insertUserData
+    insertUserData,
+    findByName,
+    findUniqueUser
 }

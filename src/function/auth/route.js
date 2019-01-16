@@ -1,7 +1,9 @@
 'use strict'
 
 const { getAllUser, login, register, edit } = require('./controller')
-const Users = require('../../dao/user')
+const Users = require('../../model/user')
+const createUserSchema = require('../../schema/creatUser')
+const userLoginSchema = require('../../schema/userLogin')
 module.exports = server => {
 
     server.route({
@@ -9,7 +11,10 @@ module.exports = server => {
         path: '/users',
         config: {
             handler: register,
-            auth: false
+            auth: false,
+            validate: {
+                payload: createUserSchema
+            }
         }
     })
 
@@ -37,19 +42,20 @@ module.exports = server => {
         path: '/users/login',
         method: 'POST',
         config: {
-            auth: false
+            auth: false,
+            handler: login,
+            validate: {
+                payload: userLoginSchema
+            }
         },
-        handler: login
     })
 
     server.route({
         method: 'GET',
         config: {
-            auth: {
-                strategy: 'jwt'
-            },
-            handler: getAllUser
+            auth: 'jwt'
         },
+        handler: getAllUser,
         path: '/users',
     })
 }
