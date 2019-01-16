@@ -3,9 +3,13 @@
 const Hapi = require('hapi')
 const Routes = require('./src/route')
 require('dotenv').config()
-const serverPort = 8080
-const port = process.env.HOST || serverPort
-const server = Hapi.Server({port})
+// const serverPort = 8080
+// const port = process.env.PORT || serverPort
+// const server = Hapi.server({ port: port })
+const server = Hapi.server({
+    port: process.env.PORT,
+    host: process.env.HOST
+})
 const HapiAuth = require('hapi-auth-jwt2')
 const mongoose = require('mongoose')
 const init = async () => {
