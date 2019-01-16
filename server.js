@@ -3,10 +3,9 @@
 const Hapi = require('hapi')
 const Routes = require('./src/route')
 require('dotenv').config()
-const server = Hapi.server({
-    port: 3000,
-    host: 'localhost'
-})
+const server = Hapi.server(
+    ~~process.env.PORT || 3000, '0.0.0.0'
+)
 const HapiAuth = require('hapi-auth-jwt2')
 const mongoose = require('mongoose')
 const init = async () => {
