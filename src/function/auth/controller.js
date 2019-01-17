@@ -37,7 +37,7 @@ const login = (request, h) => {
                         const token = jwt.sign(
                             { name: user.name },
                             process.env.SECREAT_KEY,
-                            { algorithm: 'HS256', expiresIn: "1h" }
+                            { algorithm: 'HS256', expiresIn: "1d" }
                         )
                         resolve({
                             token: token,
