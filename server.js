@@ -13,7 +13,7 @@ const server = Hapi.server({
 const HapiAuth = require('hapi-auth-jwt2')
 const mongoose = require('mongoose')
 const init = async () => {
-    await mongoose.connect("mongodb://ds157844.mlab.com:57844/hapi_movie", {
+    await mongoose.connect(process.env.DB_HOST, {
         user: process.env.DB_USER,
         pass: process.env.DB_PASSWORD
     }, err => {
