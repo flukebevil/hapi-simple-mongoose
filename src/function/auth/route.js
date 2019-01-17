@@ -8,7 +8,7 @@ module.exports = server => {
 
     server.route({
         method: 'POST',
-        path: '/users',
+        path: '/users/register',
         config: {
             handler: register,
             auth: false,
