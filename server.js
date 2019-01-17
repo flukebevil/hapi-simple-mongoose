@@ -3,9 +3,6 @@
 const Hapi = require('hapi')
 const Routes = require('./src/route')
 require('dotenv').config()
-// const serverPort = 8080
-// const port = process.env.PORT || serverPort
-// const server = Hapi.server({ port: port })
 const server = Hapi.server({
     port: process.env.PORT,
     host: process.env.HOST
