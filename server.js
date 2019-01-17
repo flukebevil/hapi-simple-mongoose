@@ -19,7 +19,6 @@ const init = async () => {
     }, err => {
         console.log(err)
     })
-    // mongodb://localhost/mydb
     await server.register({
         plugin: require('hapi-pino'),
         options: {
@@ -49,11 +48,15 @@ init().catch(err => {
 
 const validate = async (decoded, request, h) => {
     const dao = require('./src/model/user')
-    const data = await dao.findOne({ name: decoded.name })
-    if (data.err) {
-        return { isValid: false }
-    }
-    else {
-        return { isValid: true }
+    try {
+        const data = await dao.findOne({ username: decoded.username })
+        if (data.err) {
+            return { isValid: false }
+        }
+        else {
+            return { isValid: true }
+        }
+    } catch (err) {
+        console.log(err)
     }
 }

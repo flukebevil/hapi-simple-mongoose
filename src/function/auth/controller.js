@@ -35,7 +35,7 @@ const login = (request, h) => {
                     if (err) reject(err)
                     if (isMatch) {
                         const token = jwt.sign(
-                            { name: user.name },
+                            { username: user.username },
                             process.env.SECREAT_KEY,
                             { algorithm: 'HS256', expiresIn: "1d" }
                         )
