@@ -17,7 +17,7 @@ const register = async (request, h) => {
     })
     console.log(checkUser)
     if (checkUser) {
-        return ({ message: "Username has been taken Fuck" })
+        return boom.badRequest('Username has been taken Fuck')
     } else {
         db.save().catch({ message: "can not save" })
         return ({ success: true })
