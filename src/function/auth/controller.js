@@ -9,20 +9,19 @@ const getAllUser = (request, response) => {
     return Data.findAll()
 }
 
-const register = (request, h) => {
+const register = async (request, h) => {
     const params = h.request.payload
     const db = new Dao(params)
-    return new Promise((resolve, reject) => {
-        if (Data.findUniqueUser(params.username) === false) {
-            resolve({ message: "Username has been taken Fuck" })
-        } else {
-            db.save((err, data) => {
-                console.log(err)
-                err ? reject(boom.boomify(new Error(err.ValidationError), { statusCode: 400 }))
-                    : resolve(data)
-            })
-        }
+    const checkUser = await Data.findUniqueUser(request.payload.username).catch(_ => {
+        return boom.forbidden('Username has been taken fucking goddd sakmal')
     })
+    console.log(checkUser)
+    if (checkUser) {
+        return ({ message: "Username has been taken Fuck" })
+    } else {
+        db.save().catch({ message: "can not save" })
+        return ({ success: true })
+    }
 }
 
 const login = (request, h) => {
@@ -35,7 +34,7 @@ const login = (request, h) => {
                     if (err) reject(err)
                     if (isMatch) {
                         const token = jwt.sign(
-                            { username: user.username },
+                            { user_id: user._id },
                             process.env.SECREAT_KEY,
                             { algorithm: 'HS256', expiresIn: "1d" }
                         )

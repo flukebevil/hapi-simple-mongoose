@@ -45,18 +45,7 @@ const findByName = (name) => {
 }
 
 const findUniqueUser = (username) => {
-    return new Promise((resolve, reject) => {
-        dao.findOne({ username: username }, (err, res) => {
-            if (err)
-                reject(err)
-            else {
-                if (res == null) 
-                    resolve(false)
-                else 
-                    resolve(true)
-            }
-        })
-    })
+    return dao.findOne({ username: username }).then(result => result, reject => reject)
 }
 
 module.exports = {

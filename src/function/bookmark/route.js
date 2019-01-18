@@ -14,4 +14,13 @@ module.exports = server => {
             handler: controller.bookmark
         }
     });
+
+    server.route({
+        path: '/bookmark',
+        method: 'GET',
+        config: {
+            handler: controller.getBookmarkAll,
+            auth: 'jwt'
+        }
+    });
 }

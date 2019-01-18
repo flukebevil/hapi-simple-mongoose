@@ -1,13 +1,12 @@
 const Dao = require('../model/bookmark')
 const userDao = require('../model/user')
 
-const findBookmarkById = (movieId, username) => {
-    userDao.findOne({ user_name: username }, (err, res) => {
-        if (err) console.log(err)
-        // TODO catch here if res has null value naja 
-        return Dao.findOne({ movie_id: movieId, user_id: res._id })
-            .then(result => result, reject => reject)
-    })
+const findUserIdInBookmark = (username) => {
+    return userDao.findOne({ username: username }).then(result => result._id, reject => reject)
+}
+
+const findBookmarkId = (movieId, userId) => {
+    return Dao.findOneAndDelete({ movieid: movieId, user_id: userId })
 }
 
 const findUserId = (username) => {
@@ -30,13 +29,14 @@ const saveBookmark = (userId, movieId) => {
 }
 
 const showAllBookmark = (userId) => {
-    Dao.find({ user_id: userId }).then(result => result, reject => reject)
+    return Dao.find({ user_id: userId }).then(result => result, reject => reject)
 }
 
 module.exports = {
-    findBookmarkById,
+    findUserIdInBookmark,
     deleteBookmark,
     saveBookmark,
     showAllBookmark,
-    findUserId
+    findUserId,
+    findBookmarkId
 }
