@@ -6,7 +6,7 @@ const findUserIdInBookmark = (username) => {
 }
 
 const findBookmarkId = (movieId, userId) => {
-    return Dao.findOneAndDelete({ movieid: movieId, user_id: userId })
+    return Dao.findOneAndDelete({ movie_id: movieId, user_id: userId }).then(result => result, reject => reject)
 }
 
 const findUserId = (username) => {

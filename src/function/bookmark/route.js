@@ -5,7 +5,7 @@ module.exports = server => {
 
     server.route({
         path: '/bookmark',
-        method: 'POST',
+        method: 'PUT',
         config: {
             auth: 'jwt',
             validate: {

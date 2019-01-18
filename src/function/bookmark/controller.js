@@ -5,7 +5,8 @@ const bookmark = async (request, h) => {
     const userIdByAuth = request.auth.credentials.user_id
     if (userIdByAuth) {
         try {
-            const bookmarkId = dao.findBookmarkId(request.payload.movie_id, userIdByAuth)
+            const bookmarkId = await dao.findBookmarkId(request.payload.movie_id, userIdByAuth)
+            console.log(request.payload.movie_id+"    "+userIdByAuth)
             if (bookmarkId) {
                 await dao.deleteBookmark(bookmarkId)
                 return { message: "This fucking movie has been removed from your bookmark list" }
