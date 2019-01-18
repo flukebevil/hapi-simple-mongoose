@@ -46,7 +46,7 @@ init().catch(err => {
 const validate = async (decoded, request, h) => {
     const dao = require('./src/model/user')
     try {
-        const data = await dao.findOne({ _id: decoded.user_id })
+        const data = await dao.findOne({ _id: decoded.user_id }).catch(_ => { return { isValid: false } })
         if (data.err) {
             return { isValid: false }
         }

@@ -5,7 +5,7 @@ const findAll = () => {
         dao.find((err, res) => {
             if (err) reject(res)
             resolve(res)
-        })
+        }).select({ _id: 0, password: 0, __v: 0 })
     })
 }
 
