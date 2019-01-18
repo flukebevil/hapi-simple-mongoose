@@ -39,10 +39,10 @@ const login = (request, h) => {
                             process.env.SECREAT_KEY,
                             { algorithm: 'HS256', expiresIn: "1d" }
                         )
-                        resolve({
+                        resolve(baseResponse(true, "success", {
                             token: token,
                             name: user.name
-                        })
+                        }))
                     }
                     else
                         reject(boom.unauthorized('Wrong information :b '))
