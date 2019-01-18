@@ -6,7 +6,9 @@ const findUserIdInBookmark = (username) => {
 }
 
 const findBookmarkId = (movieId, userId) => {
-    return Dao.findOneAndDelete({ movie_id: movieId, user_id: userId }).then(result => result, reject => reject)
+    return Dao.findOneAndDelete(
+        { movie_id: movieId, user_id: userId }
+    ).then(result => result, reject => reject)
 }
 
 const findUserId = (username) => {
@@ -29,7 +31,9 @@ const saveBookmark = (userId, movieId) => {
 }
 
 const showAllBookmark = (userId) => {
-    return Dao.find({ user_id: userId }, { _id: 0, user_id: 0, __v: 0 }).then(result => result, reject => reject)
+    return Dao.find({ user_id: userId },
+        { _id: 0, user_id: 0, __v: 0 })
+        .then(result => result, reject => reject)
 }
 
 module.exports = {

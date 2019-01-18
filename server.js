@@ -54,6 +54,6 @@ const validate = async (decoded, request, h) => {
             return { isValid: true }
         }
     } catch (err) {
-        console.log(err)
+        return { isValid: false }
     }
 }

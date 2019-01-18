@@ -18,12 +18,6 @@ const findById = id => {
     })
 }
 
-const insertUserData = (id, body) => {
-    return new Promise((resolve, reject) => {
-        // dao.create()
-    })
-}
-
 const update = (id, body) => {
     return new Promise((resolve, reject) => {
         dao.findOneAndUpdate(id, { $set: { name: body } }, (err, res) => {
@@ -52,7 +46,6 @@ module.exports = {
     findAll,
     findById,
     update,
-    insertUserData,
     findByName,
     findUniqueUser
 }
