@@ -1,5 +1,5 @@
-const Dao = require('../model/bookmark')
-const userDao = require('../model/user')
+const Dao = require('../../model/bookmark')
+const userDao = require('../../model/user')
 
 const findUserIdInBookmark = (username) => {
     return userDao.findOne({ username: username }).then(result => result._id, reject => reject)
@@ -21,10 +21,13 @@ const deleteBookmark = (id) => {
         .then(result => result, reject => reject)
 }
 
-const saveBookmark = (userId, movieId) => {
+const saveBookmark = (userId, payload) => {
     const creatorBookmark = new Dao({
         user_id: userId,
-        movie_id: movieId
+        movie_id: payload.movie_id,
+        title: payload.title,
+        overview: payload.overview,
+        poster: payload.poster
     })
     creatorBookmark.save()
         .then(result => result, reject => reject)

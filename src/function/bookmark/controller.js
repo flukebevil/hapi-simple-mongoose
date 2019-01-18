@@ -1,4 +1,4 @@
-const dao = require('../../query/bookmark')
+const dao = require('../../query/movie/bookmark')
 const boom = require('boom')
 const baseResponse = require('../../base/response')
 
@@ -11,7 +11,7 @@ const bookmark = async (request, h) => {
                 await dao.deleteBookmark(bookmarkId)
                 return baseResponse(true, "This fucking movie has been removed from your bookmark list")
             } else {
-                await dao.saveBookmark(userIdByAuth, request.payload.movie_id)
+                await dao.saveBookmark(userIdByAuth, request.payload)
                 return baseResponse(true, "saved")
             }
         } catch (err) {
