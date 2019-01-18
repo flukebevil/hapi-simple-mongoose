@@ -2,6 +2,7 @@ const Data = require('../../query/users')
 const Dao = require('../../model/user')
 const boom = require('boom')
 const bcrypt = require('bcrypt')
+const baseResponse = require('../../base/response')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
@@ -20,7 +21,7 @@ const register = async (request, h) => {
         return boom.badRequest('Username has been taken Fuck')
     } else {
         db.save().catch({ message: "can not save" })
-        return ({ success: true })
+        return baseResponse(true, null, { name: 'fucku' })
     }
 }
 
@@ -54,7 +55,6 @@ const login = (request, h) => {
 }
 
 const edit = async (request, h) => {
-    console.log(h.request.payload)
     return Data.update(request.params.user_id, h.request.payload.name)
 }
 
